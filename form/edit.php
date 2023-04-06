@@ -34,8 +34,12 @@ if (mysqli_num_rows($query) < 1) {
 
   <form action="../controller/edit.php" method="POST">
     <div>
-      <label for="nrp">NRP: </label>
-      <input type="text" name="nrp" disabled value="<?= $mahasiswa["nrp"] ?>" />
+      <input type="text" name="nrp" hidden value="<?= $mahasiswa["nrp"] ?>" />
+    </div>
+
+    <div>
+      <label for="nrp_ui">NRP: </label>
+      <input type="text" name="nrp_ui" disabled value="<?= $mahasiswa["nrp"] ?>" />
     </div>
     <div>
       <label for="nama">Nama: </label>
