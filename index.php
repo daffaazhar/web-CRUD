@@ -1,7 +1,5 @@
 <?php
-// connect to config file
 include("config.php");
-// query student's data
 $students = query("SELECT * FROM STUDENT");
 ?>
 
@@ -16,7 +14,7 @@ $students = query("SELECT * FROM STUDENT");
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./css/style.css?v=<?php echo time(); ?>">
   <script src="https://cdn.tailwindcss.com"></script>
   <title>HIMIT Satu Atap</title>
   <style>
@@ -28,20 +26,25 @@ $students = query("SELECT * FROM STUDENT");
 
 <body class="p-8 overflow-x-hidden">
   <?php if (isset($_GET["status"])) : ?>
-    <?php if ($_GET["status"] == "sukses") : ?>
-      <div class="toast">
-        <div class="toast-content">
-          <i class="bx bx-check check"></i>
-          <div class="message">
-            <span class="text text-1">Sukses</span>
-            <span class="text text-2">Data berhasil ditambahkan</span>
-          </div>
-          <i class="bx bx-x close"></i>
+    <div class="toast">
+      <div class="toast-content">
+        <i class="bx bx-check check"></i>
+        <div class="message">
+          <span class="text text-1">Sukses</span>
 
-          <div class="progress"></div>
+          <?php if ($_GET["status"] == "sukses") : ?>
+            <span class="text text-2">Data berhasil ditambahkan</span>
+          <?php elseif ($_GET["status"] == "sukses_hapus") : ?>
+            <span class="text text-2">Data berhasil dihapus</span>
+          <?php elseif ($_GET["status"] == "sukses_edit") : ?>
+            <span class="text text-2">Data berhasil diubah</span>
+          <?php endif ?>
         </div>
+        <i class="bx bx-x close"></i>
+
+        <div class="progress"></div>
       </div>
-    <?php endif ?>
+    </div>
   <?php endif ?>
 
   <header class="flex justify-between items-center mb-6">
@@ -87,7 +90,8 @@ $students = query("SELECT * FROM STUDENT");
               <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["asal_sekolah"] ?></td>
 
               <td class='text-center border-b px-2'>
-                <a class='font-semibold text-[#2363DE]' href='form/edit.php?nrp=<?= $student["nrp"] ?>'>Edit</a> | <a class='font-semibold text-red-600' href='controller/hapus.php?nrp=<?= $student["nrp"] ?>'>Hapus</a>
+                <a class='font-semibold text-[#2363DE] cursor-pointer' href='form/edit.php?nrp=<?= $student["nrp"] ?>'>Edit</a> |
+                <a class='delete-btn font-semibold text-red-600' href="controller/hapus.php?nrp=<?= $student["nrp"] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data dengan NRP <?= $student['nrp'] ?>')">Hapus</a>
               </td>
             </tr>
           <?php endforeach ?>
@@ -101,32 +105,11 @@ $students = query("SELECT * FROM STUDENT");
   </div>
 </body>
 
-<script>
-  function showToast() {
-    const toast = document.querySelector(".toast");
-    const closeIcon = document.querySelector(".close");
-    const progress = document.querySelector(".progress");
-    toast.classList.add("active");
-    progress.classList.add("active");
-
-    setTimeout(function() {
-      toast.classList.remove("active");
-    }, 5000);
-    setTimeout(function() {
-      progress.classList.remove("active");
-    }, 5300);
-
-    closeIcon.addEventListener("click", function() {
-      toast.classList.remove("active");
-      setTimeout(function() {
-        progress.classList.remove("active");
-      }, 300);
-    });
-  }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="./js/main.js"></script>
 
 <?php if (isset($_GET["status"])) : ?>
-  <?php if ($_GET["status"] == "sukses") : ?>
+  <?php if ($_GET["status"] == "sukses" || $_GET['status'] == 'sukses_hapus' || $_GET['status'] == 'sukses_edit') : ?>
     <script>
       showToast();
     </script>

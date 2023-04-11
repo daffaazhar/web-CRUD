@@ -12,10 +12,10 @@ if (isset($_POST["simpan"])) {
   $asal_sekolah = $_POST["asal_sekolah"];
 
   $sql = "UPDATE student SET nama = '$nama', jenis_kelamin = '$jenis_kelamin', jurusan = '$jurusan', email = '$email', alamat = '$alamat', asal_sekolah = '$asal_sekolah' WHERE nrp = '$nrp'";
-  $query = mysqli_query($db, $sql);
+  $query = mysqli_query($conn, $sql);
 
   if ($query) {
-    header("Location: ../index.php");
+    header("Location: ../index.php?status=sukses_edit");
   } else {
     header("Gagal menyimpan perubahan...");
   }
