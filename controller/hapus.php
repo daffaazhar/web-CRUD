@@ -1,17 +1,10 @@
 <?php
-
 include("../config.php");
 
-if (isset($_GET["nrp"])) {
-  $nrp = $_GET["nrp"];
-  $sql = "DELETE FROM STUDENT WHERE nrp = $nrp";
-  $query = mysqli_query($db, $sql);
+$nrp = $_GET["nrp"];
 
-  if ($query) {
-    header("Location: ../index.php");
-  } else {
-    die("Gagal menghapus...");
-  }
+if (deleteData($nrp) > 0) {
+  header("Location: ../index.php?status=sukses_hapus");
 } else {
-  die("Akses dilarang...");
+  header("Location: ../index.php?status=gagal_hapus");
 }

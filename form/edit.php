@@ -8,7 +8,7 @@ if (!isset($_GET["nrp"])) {
 
 $nrp = $_GET["nrp"];
 $sql = "SELECT * FROM STUDENT WHERE nrp = $nrp";
-$query = mysqli_query($db, $sql);
+$query = mysqli_query($conn, $sql);
 $mahasiswa = mysqli_fetch_assoc($query);
 
 if (mysqli_num_rows($query) < 1) {

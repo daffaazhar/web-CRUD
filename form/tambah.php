@@ -8,49 +8,75 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <title>HIMIT Satu Atap</title>
 </head>
 
-<body class="flex justify-center items-center h-screen bg-gradient-to-r from-cyan-500 to-blue-500">
-  <form class="bg-white rounded-md p-8" action="../controller/tambah.php" method="POST">
-    <h3 class="font-bold text-4xl text-center mb-4">Tambah Data Mahasiswa</h3>
-    <div>
-      <label for="nrp">NRP: </label>
-      <input type="number" name="nrp" placeholder="Masukkan NRP..." />
-    </div>
-    <div>
-      <label for="nama">Nama: </label>
-      <input type="text" name="nama" placeholder="Masukkan Nama Lengkap..." />
-    </div>
-    <div>
-      <label for="jenis_kelamin">Jenis Kelamin: </label>
-      <input type="radio" name="jenis_kelamin" value="laki-laki">Laki-laki
-      <input type="radio" name="jenis_kelamin" value="perempuan">Perempuan
-    </div>
-    <div>
-      <label for="jurusan">Jurusan: </label>
-      <select name="jurusan">
-        <option>Teknik Informatika</option>
-        <option>Sains Data Terapan</option>
-      </select>
-    </div>
-    <div>
-      <label for="email">Email: </label>
-      <input type="text" name="email" placeholder="Masukkan email ..." />
-    </div>
-    <div>
-      <label for="alamat">Alamat: </label>
-      <textarea name="alamat" placeholder="Masukkan Alamat..."></textarea>
-    </div>
-    <div>
-      <label for="asal_sekolah">Sekolah Asal: </label>
-      <input type="text" name="asal_sekolah" placeholder="Masukkan asal sekolah..." />
-    </div>
-    <div>
-      <input class="mt-6 w-full inline-block bg-[#2363DE] text-white px-4 py-2 rounded" type="submit" value="Tambah" name="tambah" />
-    </div>
-  </form>
+<body class="flex justify-center items-center h-screen">
+  <div>
+    <h3 class="font-bold text-[32px] text-[#2d333a] text-center">Tambah Data Mahasiswa</h3>
+    <p class="text-[#2d333a] mb-6">Isi kolom di bawah ini untuk menambahkan data mahasiswa.</p>
+
+    <form class="relative w-[27.5rem]" action="../controller/tambah.php" method="POST">
+      <div class="relative mb-3 h-[47px]">
+        <input id="nrp" class="form__input" type="number" name="nrp" autocomplete="off" placeholder=" " required />
+        <label for="nrp" class="form__label">NRP</label>
+      </div>
+      <div class="relative mb-3 h-[47px]">
+        <input id="nama" class="form__input" type="text" name="nama" placeholder=" " required />
+        <label class="form__label" for="nama">Nama</label>
+      </div>
+      <div class="flex gap-x-4 items-center mb-3 w-full">
+        <label class="text-[#6f7780] font-semibold w-[35%]">Jenis Kelamin</label>
+        <div class="flex w-full gap-x-2">
+          <div class="flex items-center pl-4 border border-[#c2c8d0] border-[1.5px] rounded w-full">
+            <input id="bordered-radio-1" type="radio" value="laki-laki" name="jenis_kelamin" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" checked>
+            <label for="bordered-radio-1" class="w-full py-2 pr-3 ml-2 text-sm font-medium text-gray-900">Laki-laki</label>
+          </div>
+          <div class="flex items-center pl-4 border border-[#c2c8d0] border-[1.5px] rounded w-full">
+            <input id="bordered-radio-2" type="radio" value="perempuan" name="jenis_kelamin" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+            <label for="bordered-radio-2" class="w-full py-2 pr-3 ml-2 text-sm font-medium text-gray-900">Perempuan</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative mb-3 h-[47px]">
+        <select id="jurusan" name="jurusan" class="form__input" required>
+          <option disabled selected>-- Pilih Jurusan --</option>
+          <option>Teknik Informatika</option>
+          <option>Sains Data Terapan</option>
+        </select>
+        <label class="form__label" for="jurusan"></label>
+      </div>
+      <div class="relative mb-3 h-[47px]">
+        <input id="email" class="form__input" type="email" name="email" placeholder=" " required />
+        <label class="form__label" for="email">Email</label>
+      </div>
+      <div class="relative mb-3 h-[68px]">
+        <textarea id="alamat" class="form__input" name="alamat" placeholder=" " required></textarea>
+        <label class="form__label" for="alamat">Alamat</label>
+      </div>
+      <div class="relative mb-3 h-[47px]">
+        <input class="form__input" id="asal_sekolah" type="text" name="asal_sekolah" placeholder=" " required />
+        <label class="form__label" for="asal_sekolah">Sekolah Asal</label>
+      </div>
+      <div>
+        <button type="submit" name="tambah" class="mt-2 w-full inline-block bg-[#2363DE] text-white px-4 py-2 rounded">Tambah</button>
+      </div>
+    </form>
+  </div>
 </body>
+
+<script>
+  document.getElementById("jurusan").addEventListener("click", setFont);
+
+  function setFont() {
+    const selectBox = document.getElementById("jurusan");
+    selectBox.style.color = "#000000";
+    selectBox.style.fontWeight = "400";
+    selectBox.removeEventListener("click", setFont);
+  }
+</script>
 
 </html>
