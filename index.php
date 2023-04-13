@@ -17,11 +17,6 @@ $students = query("SELECT * FROM STUDENT");
   <link rel="stylesheet" href="./css/style.css?v=<?php echo time(); ?>">
   <script src="https://cdn.tailwindcss.com"></script>
   <title>HIMIT Satu Atap</title>
-  <style>
-    * {
-      font-family: 'Inter', sans-serif;
-    }
-  </style>
 </head>
 
 <body class="p-8 overflow-x-hidden">
@@ -31,14 +26,15 @@ $students = query("SELECT * FROM STUDENT");
         <i class="bx bx-check check"></i>
         <div class="message">
           <span class="text text-1">Sukses</span>
-
-          <?php if ($_GET["status"] == "sukses_tambah") : ?>
-            <span class="text text-2">Data berhasil ditambahkan</span>
-          <?php elseif ($_GET["status"] == "sukses_hapus") : ?>
-            <span class="text text-2">Data berhasil dihapus</span>
-          <?php elseif ($_GET["status"] == "sukses_edit") : ?>
-            <span class="text text-2">Data berhasil diubah</span>
-          <?php endif ?>
+          <span class="text text-2">
+            <?php if ($_GET["status"] == "sukses_tambah") : ?>
+              Data berhasil ditambahkan
+            <?php elseif ($_GET["status"] == "sukses_hapus") : ?>
+              Data berhasil dihapus
+            <?php elseif ($_GET["status"] == "sukses_edit") : ?>
+              Data berhasil diubah
+            <?php endif ?>
+          </span>
         </div>
         <i class="bx bx-x close"></i>
 
