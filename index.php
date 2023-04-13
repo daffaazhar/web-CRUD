@@ -32,7 +32,7 @@ $students = query("SELECT * FROM STUDENT");
         <div class="message">
           <span class="text text-1">Sukses</span>
 
-          <?php if ($_GET["status"] == "sukses") : ?>
+          <?php if ($_GET["status"] == "sukses_tambah") : ?>
             <span class="text text-2">Data berhasil ditambahkan</span>
           <?php elseif ($_GET["status"] == "sukses_hapus") : ?>
             <span class="text text-2">Data berhasil dihapus</span>
@@ -109,11 +109,9 @@ $students = query("SELECT * FROM STUDENT");
 <script src="./js/main.js"></script>
 
 <?php if (isset($_GET["status"])) : ?>
-  <?php if ($_GET["status"] == "sukses" || $_GET['status'] == 'sukses_hapus' || $_GET['status'] == 'sukses_edit') : ?>
-    <script>
-      showToast();
-    </script>
-  <?php endif ?>
+  <script>
+    showToast();
+  </script>
 <?php endif ?>
 
 </html>

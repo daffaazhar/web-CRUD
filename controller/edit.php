@@ -1,23 +1,11 @@
 <?php
-
 include("../config.php");
 
-if (isset($_POST["simpan"])) {
-  $nrp = $_POST["nrp"];
-  $nama = $_POST["nama"];
-  $jenis_kelamin = $_POST["jenis_kelamin"];
-  $jurusan = $_POST["jurusan"];
-  $email = $_POST["email"];
-  $alamat = $_POST["alamat"];
-  $asal_sekolah = $_POST["asal_sekolah"];
-
-  $sql = "UPDATE student SET nama = '$nama', jenis_kelamin = '$jenis_kelamin', jurusan = '$jurusan', email = '$email', alamat = '$alamat', asal_sekolah = '$asal_sekolah' WHERE nrp = '$nrp'";
-  $query = mysqli_query($conn, $sql);
-
-  if ($query) {
+if (isset($_POST["edit"])) {
+  if (editData($_POST) > 0) {
     header("Location: ../index.php?status=sukses_edit");
   } else {
-    header("Gagal menyimpan perubahan...");
+    header("Location: ../index.php?status=gagal_edit");
   }
 } else {
   die("Akses dilarang...");
