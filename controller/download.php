@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_GET["file"])) {
   $fileName = basename($_GET["file"]);
   $filePath = "../img/" . $fileName;

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../config.php");
+include("../functions.php");
 
 if (!isset($_GET["nrp"])) {
   header("Location: ../index.php");

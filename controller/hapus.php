@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../config.php");
+include("../functions.php");
 
 $result = deleteData($_GET["nrp"]);
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../config.php");
+include("../functions.php");
 
 if (isset($_POST["tambah"])) {
   $result = addData($_POST);
