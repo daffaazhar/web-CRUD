@@ -20,6 +20,21 @@ function query($query)
   return $rows;
 }
 
+class MissingFileException extends Exception
+{
+  protected $message = 'Upload file gambar terlebih dahulu.';
+}
+
+class InvalidExtensionException extends Exception
+{
+  protected $message = 'File gambar harus berekstensi jpg, jpeg, atau png.';
+}
+
+class FileTooLargeException extends Exception
+{
+  protected $message = 'Ukuran gambar tidak boleh melebihi 3 MB.';
+}
+
 function addData($data)
 {
   global $conn;
@@ -29,12 +44,43 @@ function addData($data)
   $jurusan = htmlspecialchars($data["jurusan"]);
   $email = htmlspecialchars($data["email"]);
   $alamat = htmlspecialchars($data["alamat"]);
-  $asal_sekolah = htmlspecialchars($data["asal_sekolah"]);
 
-  $query = "INSERT INTO STUDENT (nrp, nama, jenis_kelamin, jurusan, email, alamat, asal_sekolah) VALUES ('$nrp', '$nama', '$jenis_kelamin', '$jurusan', '$email', '$alamat', '$asal_sekolah')";
+  try {
+    $gambar = upload();
+  } catch (Exception $e) {
+    return array("status" => -1, "result" => $e->getMessage());
+  }
+
+  $query = "INSERT INTO STUDENT (nrp, nama, jenis_kelamin, jurusan, email, alamat, gambar) VALUES ('$nrp', '$nama', '$jenis_kelamin', '$jurusan', '$email', '$alamat', '$gambar')";
   mysqli_query($conn, $query);
 
-  return mysqli_affected_rows($conn);
+  return array("status" => mysqli_affected_rows($conn), "result" => "Data berhasil ditambahkan");
+}
+
+function upload()
+{
+  $fileName = $_FILES["gambar"]["name"];
+  $fileSize = $_FILES["gambar"]["size"];
+  $error = $_FILES["gambar"]["error"];
+  $tmpName = $_FILES["gambar"]["tmp_name"];
+  $validExt = ['jpg', 'jpeg', 'png', 'webp'];
+  $fileExt = strtolower(end(explode(".", $fileName)));
+
+  if ($error === 4) {
+    throw new MissingFileException();
+  }
+
+  if (!in_array($fileExt, $validExt)) {
+    throw new InvalidExtensionException();
+  }
+
+  if ($fileSize > 3145728) {
+    throw new FileTooLargeException();
+  }
+
+  $newFileName = uniqid() . "." . $fileExt;
+  move_uploaded_file($tmpName, "../img/" . $newFileName);
+  return $newFileName;
 }
 
 function deleteData($nrp)
@@ -42,7 +88,7 @@ function deleteData($nrp)
   global $conn;
   mysqli_query($conn, "DELETE FROM STUDENT WHERE nrp = '$nrp'");
 
-  return mysqli_affected_rows($conn);
+  return array("status" => mysqli_affected_rows($conn), "result" => "Data berhasil dihapus");
 }
 
 function editData($data)
@@ -54,10 +100,20 @@ function editData($data)
   $jurusan = htmlspecialchars($data["jurusan"]);
   $email = htmlspecialchars($data["email"]);
   $alamat = htmlspecialchars($data["alamat"]);
-  $asal_sekolah = htmlspecialchars($data["asal_sekolah"]);
+  $gambarLama = htmlspecialchars($data["gambarLama"]);
 
-  $query = "UPDATE student SET nama = '$nama', jenis_kelamin = '$jenis_kelamin', jurusan = '$jurusan', email = '$email', alamat = '$alamat', asal_sekolah = '$asal_sekolah' WHERE nrp = '$nrp'";
+  if ($_FILES["gambar"]["error"] === 4) {
+    $gambar = $gambarLama;
+  } else {
+    try {
+      $gambar = upload();
+    } catch (Exception $e) {
+      return array("status" => -1, "result" => $e->getMessage());
+    }
+  }
+
+  $query = "UPDATE student SET nama = '$nama', jenis_kelamin = '$jenis_kelamin', jurusan = '$jurusan', email = '$email', alamat = '$alamat', gambar = '$gambar' WHERE nrp = '$nrp'";
   mysqli_query($conn, $query);
 
-  return mysqli_affected_rows($conn);
+  return array("status" => mysqli_affected_rows($conn), "result" => "Data berhasil diubah");
 }

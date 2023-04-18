@@ -45,7 +45,8 @@
 select option:first-child {
   font-size: 18px;
 }
-.toast {
+.toast,
+.toast-warning {
   position: absolute;
   top: 16px;
   right: 18px;
@@ -58,15 +59,19 @@ select option:first-child {
   transform: translateX(calc(100% + 18px));
   transition: all 0.4s ease;
 }
-
-.toast.active {
+.toast-warning {
+  border-left: 6px solid #d7000d;
+}
+.toast.active,
+.toast-warning.active {
   transform: translateX(0%);
 }
 .toast-content {
   display: flex;
   align-items: center;
 }
-.check {
+.check,
+.warning {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,6 +82,9 @@ select option:first-child {
   font-size: 22px;
   font-weight: 700;
   border-radius: 50%;
+}
+.warning {
+  background: #d7000d;
 }
 .message {
   display: flex;
@@ -95,7 +103,8 @@ select option:first-child {
   font-weight: 400;
   line-height: 1;
 }
-.toast .close {
+.toast .close,
+.toast-warning .close {
   position: absolute;
   top: 10px;
   right: 15px;
@@ -103,10 +112,12 @@ select option:first-child {
   cursor: pointer;
   opacity: 0.7;
 }
-.toast .close:hover {
+.toast .close:hover,
+.toast-warning .close:hover {
   opacity: 1;
 }
-.toast .progress {
+.toast .progress,
+.toast-warning .progress-warning {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -114,7 +125,8 @@ select option:first-child {
   width: 100%;
   background: #ddd;
 }
-.toast .progress:before {
+.toast .progress:before,
+.toast-warning .progress-warning:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -123,7 +135,11 @@ select option:first-child {
   height: 100%;
   background-color: #59b427;
 }
-.progress.active::before {
+.toast-warning .progress-warning:before {
+  background-color: #d7000d;
+}
+.progress.active::before,
+.progress-warning.active::before {
   animation: progress 5s linear forwards;
 }
 @keyframes progress {

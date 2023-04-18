@@ -1,10 +1,10 @@
 <?php
+session_start();
 include("../config.php");
 
-$nrp = $_GET["nrp"];
+$result = deleteData($_GET["nrp"]);
 
-if (deleteData($nrp) > 0) {
-  header("Location: ../index.php?status=sukses_hapus");
-} else {
-  header("Location: ../index.php?status=gagal_hapus");
+if ($result["status"] > 0 || $result["status"] < 0) {
+  $_SESSION["message"] = $result["result"];
+  header("Location: ../index.php");
 }
