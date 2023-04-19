@@ -1,5 +1,6 @@
 <?php
-include("config.php");
+session_start();
+include("functions.php");
 $students = query("SELECT * FROM STUDENT");
 ?>
 
@@ -20,24 +21,15 @@ $students = query("SELECT * FROM STUDENT");
 </head>
 
 <body class="p-8 overflow-x-hidden">
-  <?php if (isset($_GET["status"])) : ?>
+  <?php if (isset($_SESSION["message"])) : ?>
     <div class="toast">
       <div class="toast-content">
         <i class="bx bx-check check"></i>
         <div class="message">
           <span class="text text-1">Sukses</span>
-          <span class="text text-2">
-            <?php if ($_GET["status"] == "sukses_tambah") : ?>
-              Data berhasil ditambahkan
-            <?php elseif ($_GET["status"] == "sukses_hapus") : ?>
-              Data berhasil dihapus
-            <?php elseif ($_GET["status"] == "sukses_edit") : ?>
-              Data berhasil diubah
-            <?php endif ?>
-          </span>
+          <span class="text text-2"><?= $_SESSION["message"] ?></span>
         </div>
         <i class="bx bx-x close"></i>
-
         <div class="progress"></div>
       </div>
     </div>
@@ -55,15 +47,15 @@ $students = query("SELECT * FROM STUDENT");
     <table class="w-full border mb-4">
       <thead class="border-b">
         <tr>
-          <th scope="col" class="py-2 border-r">No</th>
-          <th scope="col" class="py-2 border-r">NRP</th>
-          <th scope="col" class="py-2 border-r">Nama</th>
-          <th scope="col" class="py-2 border-r">Kelamin</th>
-          <th scope="col" class="py-2 border-r">Jurusan</th>
-          <th scope="col" class="py-2 border-r">Email</th>
-          <th scope="col" class="py-2 border-r">Alamat</th>
-          <th scope="col" class="py-2 border-r">Asal Sekolah</th>
-          <th scope="col" class="py-2">Aksi</th>
+          <th scope="col" class="w-[40px] max-w-[40px] py-2 border-r">No</th>
+          <th scope="col" class="w-[115px] max-w-[115px] py-2 border-r">NRP</th>
+          <th scope="col" class="w-[210px] max-w-[210px] py-2 border-r">Nama</th>
+          <th scope="col" class="w-[100px] max-w[100px] py-2 border-r">Kelamin</th>
+          <th scope="col" class="w-[165px] max-w-[165px] py-2 border-r">Jurusan</th>
+          <th scope="col" class="w-[220px] max-w-[220px] py-2 border-r">Email</th>
+          <th scope="col" class="w-[300px] max-w-[300px] py-2 border-r">Alamat</th>
+          <th scope="col" class="w-[140px] max-w-[140px] py-2 border-r">Foto Profil</th>
+          <th scope="col" class="w-[120px] max-w-[120px] py-2">Aksi</th>
         </tr>
       </thead>
 
@@ -76,18 +68,32 @@ $students = query("SELECT * FROM STUDENT");
         <?php else : ?>
           <?php foreach ($students as $student) : ?>
             <tr>
-              <td class="font-normal whitespace-nowrap py-2 border-r border-b px-2"><?= $i++ ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["nrp"] ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["nama"] ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["jenis_kelamin"] ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["jurusan"] ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["email"] ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["alamat"] ?></td>
-              <td class="whitespace-nowrap py-2 border-r border-b px-2"><?= $student["asal_sekolah"] ?></td>
-
-              <td class='text-center border-b px-2'>
-                <a class='font-semibold text-[#2363DE] cursor-pointer' href='form/edit.php?nrp=<?= $student["nrp"] ?>'>Edit</a> |
-                <a class='delete-btn font-semibold text-red-600' href="controller/hapus.php?nrp=<?= $student["nrp"] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data dengan NRP <?= $student['nrp'] ?>')">Hapus</a>
+              <td class="w-[40px] max-w-[40px] font-normal truncate py-2 border-r border-b px-2 text-center"><?= $i++ ?></td>
+              <td class="w-[115px] max-w-[115px] truncate py-2 border-r border-b px-2 text-center"><?= $student["nrp"] ?></td>
+              <td class="w-[210px] max-w-[210px] truncate py-2 border-r border-b px-2"><?= $student["nama"] ?></td>
+              <td class="w-[100px] max-w[100px] truncate py-2 border-r border-b px-2 text-center"><?= $student["jenis_kelamin"] ?></td>
+              <td class="w-[165px] max-w-[165px] truncate py-2 border-r border-b px-2 text-center"><?= $student["jurusan"] ?></td>
+              <td class="w-[220px] max-w-[220px] truncate py-2 border-r border-b px-2"><?= $student["email"] ?></td>
+              <td class="w-[300px] max-w-[300px] truncate py-2 border-r border-b px-2"><?= $student["alamat"] ?></td>
+              <td class="w-[140px] max-w-[140px] truncate py-2 border-r border-b px-2">
+                <a class="w-full" href='controller/download.php?file=<?= $student["gambar"] ?>'>
+                  <div class="bg-[#2363DE] rounded p-1 flex justify-center items-center gap-x-2">
+                    <i class='bx bxs-download text-white text-lg'></i>
+                    <span class="text-white">Unduh</span>
+                  </div>
+                </a>
+              </td>
+              <td class='w-[120px] max-w-[120px] p-2 flex gap-x-1.5'>
+                <a class="w-full" href='form/edit.php?nrp=<?= $student["nrp"] ?>'>
+                  <div class="bg-[#2363DE] rounded p-1 flex justify-center items-center">
+                    <i class='bx bxs-edit text-white text-lg'></i>
+                  </div>
+                </a>
+                <a class='w-full' href="controller/hapus.php?nrp=<?= $student["nrp"] ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data dengan NRP <?= $student['nrp'] ?>')">
+                  <div class="bg-red-600 rounded p-1 flex justify-center items-center">
+                    <i class='bx bxs-trash text-white text-lg'></i>
+                  </div>
+                </a>
               </td>
             </tr>
           <?php endforeach ?>
@@ -101,13 +107,13 @@ $students = query("SELECT * FROM STUDENT");
   </div>
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./js/main.js"></script>
 
-<?php if (isset($_GET["status"])) : ?>
+<?php if (isset($_SESSION["message"])) : ?>
   <script>
     showToast();
   </script>
 <?php endif ?>
+<?php unset($_SESSION["message"]) ?>
 
 </html>

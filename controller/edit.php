@@ -1,11 +1,15 @@
 <?php
-include("../config.php");
+session_start();
+include("../functions.php");
 
 if (isset($_POST["edit"])) {
-  if (editData($_POST) > 0) {
-    header("Location: ../index.php?status=sukses_edit");
+  $result = editData($_POST);
+  if ($result["status"] <= 0) {
+    $_SESSION["message"] = $result["result"];
+    header("Location: ../form/edit.php?nrp=" . $_POST["nrp"]);
   } else {
-    header("Location: ../index.php?status=gagal_edit");
+    $_SESSION["message"] = $result["result"];
+    header("Location: ../index.php");
   }
 } else {
   die("Akses dilarang...");
