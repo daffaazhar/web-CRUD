@@ -41,7 +41,8 @@ function upload()
   $error = $_FILES["gambar"]["error"];
   $tmpName = $_FILES["gambar"]["tmp_name"];
   $validExt = ['jpg', 'jpeg', 'png', 'webp'];
-  $fileExt = strtolower(end(explode(".", $fileName)));
+  $tmp = explode(".", $fileName);
+  $fileExt = strtolower(end($tmp));
 
   if ($error === 4) {
     throw new Exception("Upload file gambar terlebih dahulu.");

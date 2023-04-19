@@ -6,7 +6,7 @@ if (isset($_POST["edit"])) {
   $result = editData($_POST);
   if ($result["status"] <= 0) {
     $_SESSION["message"] = $result["result"];
-    header("Location: ../form/edit.php");
+    header("Location: ../form/edit.php?nrp=" . $_POST["nrp"]);
   } else {
     $_SESSION["message"] = $result["result"];
     header("Location: ../index.php");
