@@ -1,7 +1,6 @@
 function setFont() {
   const selectBox = document.getElementById("jurusan");
   selectBox.style.color = "#000000";
-  selectBox.style.fontWeight = "400";
   selectBox.removeEventListener("click", setFont);
 }
 document.getElementById("jurusan").addEventListener("click", setFont);

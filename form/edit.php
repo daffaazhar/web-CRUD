@@ -57,7 +57,7 @@ if (!isset($_GET["nrp"])) {
         <label class="form__label" for="nama">Nama</label>
       </div>
       <div class="flex gap-x-4 items-center mb-3 w-full">
-        <label class="text-[#6f7780] font-semibold w-[35%]">Jenis Kelamin</label>
+        <label class="text-[#6f7780] w-[35%]">Jenis Kelamin</label>
         <div class="flex w-full gap-x-2">
           <div class="flex items-center pl-4 border border-[#c2c8d0] border-[1.5px] rounded-md w-full">
             <input id="bordered-radio-1" type="radio" value="laki-laki" name="jenis_kelamin" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" <?= $students["jenis_kelamin"] ? "checked" : "" ?>>
@@ -83,11 +83,11 @@ if (!isset($_GET["nrp"])) {
         <label class="form__label" for="email">Email</label>
       </div>
       <div class="relative mb-3 h-[75px]">
-        <textarea id="alamat" class="form__input" name="alamat" autocomplete="off" placeholder=" " required><?= $students["alamat"] ?></textarea>
+        <textarea id="alamat" class="form__input resize-none" name="alamat" autocomplete="off" placeholder=" " required><?= $students["alamat"] ?></textarea>
         <label class="form__label" for="alamat">Alamat</label>
       </div>
       <div class="mb-6">
-        <label class="block text-[#6f7780] mb-3 font-semibold" for="gambar">Foto Profil</label>
+        <label class="block text-[#6f7780] mb-3" for="gambar">Foto Profil</label>
         <div class="flex justify-between items-center">
           <img src="../img/<?= $students["gambar"] ?>" alt="Foto Profil <?php $students["nama"] ?>" id="image-preview" class="w-20 h-20 rounded-full object-cover">
           <div>

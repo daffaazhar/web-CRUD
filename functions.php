@@ -12,20 +12,20 @@ function query($query)
   return $rows;
 }
 
-class MissingFileException extends Exception
-{
-  protected $message = 'Upload file gambar terlebih dahulu.';
-}
+// class MissingFileException extends Exception
+// {
+//   protected $message = 'Upload file gambar terlebih dahulu.';
+// }
 
-class InvalidExtensionException extends Exception
-{
-  protected $message = 'File gambar harus berekstensi jpg, jpeg, atau png.';
-}
+// class InvalidExtensionException extends Exception
+// {
+//   protected $message = 'File gambar harus berekstensi jpg, jpeg, atau png.';
+// }
 
-class FileTooLargeException extends Exception
-{
-  protected $message = 'Ukuran gambar tidak boleh melebihi 3 MB.';
-}
+// class FileTooLargeException extends Exception
+// {
+//   protected $message = 'Ukuran gambar tidak boleh melebihi 3 MB.';
+// }
 
 function addData($data)
 {
@@ -59,15 +59,15 @@ function upload()
   $fileExt = strtolower(end(explode(".", $fileName)));
 
   if ($error === 4) {
-    throw new MissingFileException();
+    throw new Exception("Upload file gambar terlebih dahulu.");
   }
 
   if (!in_array($fileExt, $validExt)) {
-    throw new InvalidExtensionException();
+    throw new Exception("File gambar harus berekstensi jpg, jpeg, atau png.");
   }
 
   if ($fileSize > 3145728) {
-    throw new FileTooLargeException();
+    throw new Exception("Ukuran gambar tidak boleh melebihi 3 MB.");
   }
 
   $newFileName = uniqid() . "." . $fileExt;
