@@ -12,21 +12,6 @@ function query($query)
   return $rows;
 }
 
-// class MissingFileException extends Exception
-// {
-//   protected $message = 'Upload file gambar terlebih dahulu.';
-// }
-
-// class InvalidExtensionException extends Exception
-// {
-//   protected $message = 'File gambar harus berekstensi jpg, jpeg, atau png.';
-// }
-
-// class FileTooLargeException extends Exception
-// {
-//   protected $message = 'Ukuran gambar tidak boleh melebihi 3 MB.';
-// }
-
 function addData($data)
 {
   global $conn;
