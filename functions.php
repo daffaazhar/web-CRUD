@@ -95,3 +95,29 @@ function editData($data)
 
   return array("status" => mysqli_affected_rows($conn), "result" => "Data berhasil diubah");
 }
+
+function registration($data)
+{
+  global $conn;
+  $username = strtolower(stripslashes($data["username"]));
+  $email = $data["email"];
+  $password = mysqli_real_escape_string($conn, $data["password"]);
+  $password = password_hash($password, PASSWORD_DEFAULT);
+  mysqli_query($conn, "INSERT INTO USERS VALUES(null, '$username', '$email', '$password')");
+
+  return array("status" => mysqli_affected_rows($conn), "result" => "Silakan lakukan login untuk melanjutkan");
+}
+
+function greeting()
+{
+  date_default_timezone_set('Asia/Jakarta');
+  $hour = date("H");
+  if ($hour < 12)
+    return "Pagi";
+  else if ($hour >= 12 && $hour < 15)
+    return "Siang";
+  else if ($hour >= 15 && $hour < 18)
+    return "Sore";
+  else if ($hour >= 18)
+    return "Malam";
+}

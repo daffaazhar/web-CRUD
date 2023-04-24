@@ -2,6 +2,11 @@
 session_start();
 include("../functions.php");
 
+if (!isset($_SESSION["login"])) {
+  header("Location: ./login.php");
+  exit;
+}
+
 if (!isset($_GET["nrp"])) {
   header("Location: ../index.php");
 } else {
@@ -97,8 +102,9 @@ if (!isset($_GET["nrp"])) {
           </div>
         </div>
       </div>
-      <div>
-        <button type="submit" name="edit" class="mt-2 w-full inline-block bg-[#2363DE] text-white px-4 py-2 rounded">Simpan</button>
+      <div class="flex items-center mt-10 gap-x-3">
+        <a href="../index.php" class="w-1/2 text-center px-4 py-2 bg-[#e1e1e1] rounded">Kembali</a>
+        <button type="submit" name="edit" class="w-1/2 inline-block bg-[#2363DE] text-white px-4 py-2 rounded">Simpan</button>
       </div>
     </form>
   </div>

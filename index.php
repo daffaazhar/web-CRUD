@@ -1,6 +1,12 @@
 <?php
 session_start();
 include("functions.php");
+
+if (!isset($_SESSION["login"])) {
+  header("Location: ./form/login.php");
+  exit;
+}
+
 $students = query("SELECT * FROM STUDENT");
 ?>
 
@@ -35,15 +41,45 @@ $students = query("SELECT * FROM STUDENT");
     </div>
   <?php endif ?>
 
-  <header class="flex justify-between items-center mb-6">
-    <div>
-      <h1 class="font-semibold text-4xl mb-2">HIMIT Satu Atap</h1>
-      <h3 class="font-normal text-xl text-gray-600">Kumpulan Data Mahasiswa HIMIT</h3>
+  <header class="flex justify-between items-center mb-8">
+    <div class="flex items-center gap-x-4">
+      <img src="./img/logo-himit.png" alt="Logo HIMIT" class="w-20">
+      <div>
+        <h1 class="font-semibold text-4xl mb-2">HIMIT Satu Atap</h1>
+        <h3 class="font-normal text-xl text-gray-600">Kumpulan Data Mahasiswa HIMIT</h3>
+      </div>
     </div>
-    <a class="inline-block bg-[#2363DE] text-white px-4 py-2 rounded" href="form/tambah.php">Tambah Data</a>
+    <div class="flex items-center gap-x-4">
+      <div class="">
+        <h2 class="font-semibold">Selamat <?= greeting() ?>, <?= $_SESSION["username"] ?>!</h2>
+        <p class="float-right text-[#202020]">Administrator HSA</p>
+      </div>
+      <button id="dropdownDefaultButton" class="flex items-center gap-x-2" data-dropdown-toggle="dropdown">
+        <img src="./img/avatar-placeholder.jpeg" alt="" class="rounded-full w-11">
+        <i class='bx bxs-chevron-down rounded cursor-pointer text-[#4b5563]'></i>
+      </button>
+      <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-[0_5px_20px_rgba(92,99,105,0.3)] w-44" style="left: -32px !important">
+        <ul class="py-2 text-sm" aria-labelledby="dropdownDefaultButton">
+          <li>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+          </li>
+          <li>
+            <a href="./controller/logout.php" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </header>
 
-  <div>
+  <div class="flex gap-x-4 mb-8">
+    <form action="" method="POST" class="relative w-[90%]">
+      <input type="text" id="keyword" class="w-full rounded border border-[#c2c8d0] h-full px-4 focus:outline-none" placeholder="Cari data disini..." autocomplete="off" onkeyup="searchData()">
+      <button type="submit" name="search" id="search-button" class="absolute inset-y-1/4 right-4 text-lg"><i class='bx bx-search'></i></button>
+    </form>
+    <a class="w-[10%] bg-[#2363DE] text-center text-white px-4 py-2 rounded" href="form/tambah.php">Tambah Data</a>
+  </div>
+
+  <div id="table-container">
     <table class="w-full border mb-4">
       <thead class="border-b">
         <tr>
@@ -71,8 +107,8 @@ $students = query("SELECT * FROM STUDENT");
               <td class="w-[40px] max-w-[40px] font-normal truncate py-2 border-r border-b px-2 text-center"><?= $i++ ?></td>
               <td class="w-[115px] max-w-[115px] truncate py-2 border-r border-b px-2 text-center"><?= $student["nrp"] ?></td>
               <td class="w-[210px] max-w-[210px] truncate py-2 border-r border-b px-2"><?= $student["nama"] ?></td>
-              <td class="w-[100px] max-w[100px] truncate py-2 border-r border-b px-2 text-center"><?= $student["jenis_kelamin"] ?></td>
-              <td class="w-[165px] max-w-[165px] truncate py-2 border-r border-b px-2 text-center"><?= $student["jurusan"] ?></td>
+              <td class="w-[100px] max-w[100px] truncate py-2 border-r border-b px-2"><?= $student["jenis_kelamin"] ?></td>
+              <td class="w-[165px] max-w-[165px] truncate py-2 border-r border-b px-2"><?= $student["jurusan"] ?></td>
               <td class="w-[220px] max-w-[220px] truncate py-2 border-r border-b px-2"><?= $student["email"] ?></td>
               <td class="w-[300px] max-w-[300px] truncate py-2 border-r border-b px-2"><?= $student["alamat"] ?></td>
               <td class="w-[140px] max-w-[140px] truncate py-2 border-r border-b px-2">
@@ -100,15 +136,14 @@ $students = query("SELECT * FROM STUDENT");
       </tbody>
     <?php endif ?>
     </table>
-
     <?php if (!count($students) == 0) : ?>
       <p>Total Mahasiswa: <?= count($students) ?></p>
     <?php endif ?>
   </div>
 </body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <script src="./js/main.js"></script>
-
 <?php if (isset($_SESSION["message"])) : ?>
   <script>
     showToast();
