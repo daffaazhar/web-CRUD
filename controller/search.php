@@ -23,7 +23,7 @@ $students = query("SELECT * FROM STUDENT WHERE nrp LIKE '%$keyword%' OR nama LIK
     <?php $i = 1; ?>
     <?php if (count($students) == 0) : ?>
       <tr>
-        <td colspan="9" class="text-center py-4">Sepertinya belum ada data yang dapat ditampilkan. Coba untuk tambahkan data terlebih dahulu.</td>
+        <td colspan="9" class="text-center py-4">Maaf, kami tidak dapat menemukan data yang Anda cari. Periksa kata kunci pencarian Anda dan coba lagi.</td>
       </tr>
     <?php else : ?>
       <?php foreach ($students as $student) : ?>

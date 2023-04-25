@@ -72,10 +72,10 @@ $students = query("SELECT * FROM STUDENT");
   </header>
 
   <div class="flex gap-x-4 mb-8">
-    <form action="" method="POST" class="relative w-[90%]">
+    <div class="relative w-[90%]">
       <input type="text" id="keyword" class="w-full rounded border border-[#c2c8d0] h-full px-4 focus:outline-none" placeholder="Cari data disini..." autocomplete="off" onkeyup="searchData()">
-      <button type="submit" name="search" id="search-button" class="absolute inset-y-1/4 right-4 text-lg"><i class='bx bx-search'></i></button>
-    </form>
+      <button id="search-button" class="absolute inset-y-1/4 right-4 text-lg"><i class='bx bx-search'></i></button>
+    </div>
     <a class="w-[10%] bg-[#2363DE] text-center text-white px-4 py-2 rounded" href="form/tambah.php">Tambah Data</a>
   </div>
 

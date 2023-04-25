@@ -7,8 +7,8 @@ document.getElementById("jurusan").addEventListener("click", setFont);
 
 function showToast() {
   const currentLocation = window.location.href;
-  const toastClass = currentLocation === "http://localhost/web-daftar-mahasiswa/index.php" || "http://localhost/web-daftar-mahasiswa/form/login.php" ? ".toast" : ".toast-warning";
-  const progressClass = currentLocation === "http://localhost/web-daftar-mahasiswa/index.php" || "http://localhost/web-daftar-mahasiswa/form/login.php" ? ".progress" : ".progress-warning";
+  const toastClass = currentLocation == "http://localhost/web-daftar-mahasiswa/index.php" || currentLocation == "http://localhost/web-daftar-mahasiswa/form/login.php" ? ".toast" : ".toast-warning";
+  const progressClass = currentLocation == "http://localhost/web-daftar-mahasiswa/index.php" || currentLocation == "http://localhost/web-daftar-mahasiswa/form/login.php" ? ".progress" : ".progress-warning";
   const toast = document.querySelector(toastClass);
   const progress = document.querySelector(progressClass);
   const closeIcon = document.querySelector(`${toastClass} .close`);
