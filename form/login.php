@@ -1,5 +1,19 @@
 <?php
 session_start();
+include("../config.php");
+
+if (isset($_COOKIE["id"]) && isset($_COOKIE["key"])) {
+  $id = $_COOKIE["id"];
+  $key = $_COOKIE["key"];
+
+  $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $id");
+  $row = mysqli_fetch_assoc($result);
+
+  if ($key === hash("sha256", $row["username"])) {
+    $_SESSION["login"] = true;
+  }
+}
+
 if (isset($_SESSION["login"])) {
   header("Location: ../index.php");
   exit;
@@ -58,13 +72,18 @@ if (isset($_SESSION["login"])) {
             <label for="username" class="form__label">Username atau Email</label>
           </div>
         </div>
-        <div class="mb-3.5">
+        <div class="mb-4">
           <div class="relative h-[50px]">
             <input type="password" name="password" id="password" class="form__input" autocomplete="off" placeholder=" " required />
             <i class='eye-icon bx bx-hide absolute text-xl text-[#939393] cursor-pointer right-3 inset-y-1/4' onclick="togglePasswordVisibility('password')"></i>
             <label for="password" class="form__label">Password</label>
           </div>
         </div>
+        <label class="container-checkbox mb-3.5">
+          <input type="checkbox" name="remember" id="remember">
+          <div class="checkmark"></div>
+          <label for="remember">Ingat saya</label>
+        </label>
         <div class="mb-9">
           <button type="submit" name="login" class="w-full mt-2 inline-block bg-[#2363DE] text-white px-4 py-2 rounded">Login</button>
         </div>

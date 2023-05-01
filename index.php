@@ -2,7 +2,7 @@
 session_start();
 include("functions.php");
 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["login"]) || !isset($_COOKIE["id"])) {
   header("Location: ./form/login.php");
   exit;
 }
