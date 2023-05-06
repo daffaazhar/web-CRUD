@@ -85,7 +85,7 @@ if (!isset($_SESSION["login"])) {
         <div class="flex justify-between items-center">
           <img src="../img/avatar-placeholder.jpeg" alt="" id="image-preview" class="w-20 h-20 rounded-full object-cover">
           <div>
-            <input type="file" name="gambar" id="gambar" class="w-full relative py-2 px-3 flex items-center text-sm border-[1.5px] border-[#c2c8d0] rounded-md cursor-pointer focus:outline-none file:float-right file:ml-4 file:bg-[#2363DE] file:border-none file:absolute file:top-0 file:-right-1 file:text-white file:h-full file:px-4 file:cursor-pointer" onchange="imagePreview()">
+            <input type="file" accept="image/png, image/jpeg, image/jpg, image/webp" name="gambar" id="gambar" class="w-full relative py-2 px-3 flex items-center text-sm border-[1.5px] border-[#c2c8d0] rounded-md cursor-pointer focus:outline-none file:float-right file:ml-4 file:bg-[#2363DE] file:border-none file:absolute file:top-0 file:-right-1 file:text-white file:h-full file:px-4 file:cursor-pointer" onchange="imagePreview()">
             <p class="mt-1 text-sm text-gray-500">PNG, JPG, WEBP, atau JPEG (Max. 3 MB)</p>
           </div>
         </div>

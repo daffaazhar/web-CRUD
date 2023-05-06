@@ -61,9 +61,6 @@ $students = query("SELECT * FROM STUDENT");
       <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-[0_5px_20px_rgba(92,99,105,0.3)] w-44" style="left: -32px !important">
         <ul class="py-2 text-sm" aria-labelledby="dropdownDefaultButton">
           <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
-          </li>
-          <li>
             <a href="./controller/logout.php" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
           </li>
         </ul>
